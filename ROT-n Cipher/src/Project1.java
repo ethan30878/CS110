@@ -19,22 +19,15 @@ public class Project1 {
 				+ "Enter the number of your selection:\n\n"
 				+ "1: Enter plain text manually.\n"
 				+ "2: Read plain text from file.";
-		
 		final String ENTER_VALUE = "Enter a value for n from 1 to 25:";
-		
 		String value = "";
-		
-		int n = 0;
-		
 		String unencrypted = "";
-		
 		String encrypted = "";
-		
 		String fileName = "";
-		
 		Boolean validInput = true;
-		
 		Boolean runAgain = false;
+		Boolean nIsValid = false;
+		int n = 0;
 		
 		do {
 		
@@ -45,13 +38,28 @@ public class Project1 {
 				switch (option) {
 					case "1":
 						unencrypted = JOptionPane.showInputDialog(null, "Enter the plain text:", "ROT-n Cipher", JOptionPane.INFORMATION_MESSAGE);
-						value = JOptionPane.showInputDialog(null, ENTER_VALUE);
-						n = Integer.parseInt(value);
+						do {
+							value = JOptionPane.showInputDialog(null, ENTER_VALUE);
+							n = Integer.parseInt(value);
+							if (n > 0 && n < 25) {
+								nIsValid = true;
+							} else {
+								JOptionPane.showMessageDialog(null, "Invalid number: " + n + "\nMust be between 1 and 25.\nPlease try again.");
+							}
+						} while(!nIsValid);
 						validInput = true;
 					break;
 					case "2":
 						fileName = JOptionPane.showInputDialog(null, "Enter the name of the file: ", "ROT-n Cipher", JOptionPane.INFORMATION_MESSAGE);
-						value = JOptionPane.showInputDialog(null, ENTER_VALUE);
+						do {
+							value = JOptionPane.showInputDialog(null, ENTER_VALUE);
+							n = Integer.parseInt(value);
+							if (n > 0 && n < 25) {
+								nIsValid = true;
+							} else {
+								JOptionPane.showMessageDialog(null, "Invalid number: " + n + "\nMust be between 1 and 25.\nPlease try again.");
+							}
+						} while(!nIsValid);
 						BufferedReader in = new BufferedReader(new FileReader(fileName));
 						while (in.ready()) {
 							unencrypted += in.readLine();
