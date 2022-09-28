@@ -30,11 +30,9 @@ public class Project1 {
 		int n = 0;
 		
 		do {
-		
 			do {
-			
 				String option = JOptionPane.showInputDialog(null, WELCOME_MSG, "ROT-n Cipher", JOptionPane.INFORMATION_MESSAGE);
-			
+				
 				switch (option) {
 					case "1":
 						unencrypted = JOptionPane.showInputDialog(null, "Enter the plain text:", "ROT-n Cipher", JOptionPane.INFORMATION_MESSAGE);
@@ -84,6 +82,7 @@ public class Project1 {
 				runAgain = true;
 			else
 				runAgain = false;
+			
 		} while(runAgain);		
 	}
 }
