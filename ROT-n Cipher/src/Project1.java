@@ -79,10 +79,22 @@ public class Project1 {
 			int counter = 0;
 			
 			for (int i = 0; i < unencrypted.length(); i++) {
+				
 				char c = (char)(unencrypted.charAt(i) + n);
+				int ascii = c;
+				JOptionPane.showMessageDialog(null, ascii);
+				
 				if (Character.isAlphabetic(c)) {
-					encrypted += c;
-					counter++;
+					if (ascii > 90) {
+						encrypted += (char)(65 + (ascii - 90));;
+						counter++;
+					} else if (ascii > 122) {
+						encrypted += (char)(97 + (ascii - 122));;
+						counter++;
+					} else if (ascii >= 65 && ascii <= 90 || ascii >= 97 && ascii <= 122) {
+						encrypted += c;
+						counter++;
+					}
 				} else {
 					encrypted += (char)unencrypted.charAt(i);
 				}
@@ -103,7 +115,7 @@ public class Project1 {
 			
 			JOptionPane.showMessageDialog(null, "You have successfully encrypted " + counter + " characters.");
 		
-			int yesOrNo = JOptionPane.showConfirmDialog(null, "Run again?");
+			int yesOrNo = JOptionPane.showConfirmDialog(null, "Encrypt another plain text?");
 			if (yesOrNo == JOptionPane.YES_OPTION)
 				runAgain = true;
 			else
