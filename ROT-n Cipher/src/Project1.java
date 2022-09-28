@@ -19,7 +19,8 @@ public class Project1 {
 				+ "Enter the number of your selection:\n\n"
 				+ "1: Enter plain text manually.\n"
 				+ "2: Read plain text from file.";
-		final String ENTER_VALUE = "Enter a vlaue for n from 1 to 25:";
+		
+		final String ENTER_VALUE = "Enter a value for n from 1 to 25:";
 		
 		String value = "";
 		
@@ -36,52 +37,48 @@ public class Project1 {
 		Boolean runAgain = false;
 		
 		do {
-			
-			String option = JOptionPane.showInputDialog(null, WELCOME_MSG, "ROT-n Cipher", JOptionPane.INFORMATION_MESSAGE);
-			
-			switch (option) {
-				case "1":
-				
-					unencrypted = JOptionPane.showInputDialog(null, "Enter the plain text:", "ROT-n Cipher", JOptionPane.INFORMATION_MESSAGE);
-					value = JOptionPane.showInputDialog(null, ENTER_VALUE);
-					n = Integer.parseInt(value);
-					validInput = true;
-				
-					break;
-				case "2":
 		
-					fileName = JOptionPane.showInputDialog(null, "Enter the name of the file: ", "ROT-n Cipher", JOptionPane.INFORMATION_MESSAGE);
-					value = JOptionPane.showInputDialog(null, ENTER_VALUE);
-					BufferedReader in = new BufferedReader(new FileReader(fileName));
-					while (in.ready()) {
-						unencrypted += in.readLine();
-					}
-					in.close();
-					validInput = true;
-					// Insert file reading code here
-				
-					break;
-				default:
-				
-					JOptionPane.showMessageDialog(null, "Invalid choice: " + option + "\nMust be between 1 and 2.\nPlease try again.");
-					validInput = false;
+			do {
 			
+				String option = JOptionPane.showInputDialog(null, WELCOME_MSG, "ROT-n Cipher", JOptionPane.INFORMATION_MESSAGE);
+			
+				switch (option) {
+					case "1":
+						unencrypted = JOptionPane.showInputDialog(null, "Enter the plain text:", "ROT-n Cipher", JOptionPane.INFORMATION_MESSAGE);
+						value = JOptionPane.showInputDialog(null, ENTER_VALUE);
+						n = Integer.parseInt(value);
+						validInput = true;
+					break;
+					case "2":
+						fileName = JOptionPane.showInputDialog(null, "Enter the name of the file: ", "ROT-n Cipher", JOptionPane.INFORMATION_MESSAGE);
+						value = JOptionPane.showInputDialog(null, ENTER_VALUE);
+						BufferedReader in = new BufferedReader(new FileReader(fileName));
+						while (in.ready()) {
+							unencrypted += in.readLine();
+						}
+							in.close();
+							validInput = true;
+							// Insert file reading code here
+					break;
+					default:
+						JOptionPane.showMessageDialog(null, "Invalid choice: " + option + "\nMust be between 1 and 2.\nPlease try again.");
+						validInput = false;
+				}
+			} while (!validInput);  
+		
+			// JOptionPane.showMessageDialog(null, n);
+		
+			for (int i = 0; i < unencrypted.length(); i++) {
+			encrypted += (char)(unencrypted.charAt(i) + n);
 			}
-		} while (!validInput);  
 		
-		// JOptionPane.showMessageDialog(null, n);
+			JOptionPane.showMessageDialog(null, encrypted);
 		
-		for (int i = 0; i < unencrypted.length(); i++) {
-			encrypted += unencrypted.charAt(i);
-		}
-		JOptionPane.showMessageDialog(null, encrypted);
-		
-		int yesOrNo = JOptionPane.showConfirmDialog(null, "Run again?");
-		
-		if (yesOrNo == JOptionPane.YES_OPTION)
-			runAgain = true;
-		else
-			runAgain = false;
-		}
-			
+			int yesOrNo = JOptionPane.showConfirmDialog(null, "Run again?");
+			if (yesOrNo == JOptionPane.YES_OPTION)
+				runAgain = true;
+			else
+				runAgain = false;
+		} while(runAgain);		
 	}
+}
