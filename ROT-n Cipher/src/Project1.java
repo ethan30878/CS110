@@ -58,15 +58,12 @@ public class Project1 {
 						}
 							in.close();
 							validInput = true;
-							// Insert file reading code here
 					break;
 					default:
 						JOptionPane.showMessageDialog(null, "Invalid choice: " + option + "\nMust be between 1 and 2.\nPlease try again.");
 						validInput = false;
 				}
 			} while (!validInput);  
-		
-			// JOptionPane.showMessageDialog(null, n);
 		
 			for (int i = 0; i < unencrypted.length(); i++) {
 			encrypted += (char)(unencrypted.charAt(i) + n);
