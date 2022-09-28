@@ -5,9 +5,9 @@ Program Description: Beep boop bop
 */
 import javax.swing.JOptionPane;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
+import java.io.BufferedWriter;
 import java.io.FileReader;
-import java.io.IOException;
+import java.io.FileWriter;
 
 public class Project1 {
 
@@ -20,6 +20,10 @@ public class Project1 {
 				+ "1: Enter plain text manually.\n"
 				+ "2: Read plain text from file.";
 		final String ENTER_VALUE = "Enter a value for n from 1 to 25:";
+		final String OUTPUT_MSG = "How would you like to output the cipher text?\n"
+				+ "Enter the number of your selection:\n"
+				+ "1: Output cipher text to screen.\n"
+				+ "2: Output cipher text to file.";
 		String value = "";
 		String unencrypted = "";
 		String encrypted = "";
@@ -27,6 +31,7 @@ public class Project1 {
 		Boolean validInput = true;
 		Boolean runAgain = false;
 		Boolean nIsValid = false;
+		String outputOption = "";
 		int n = 0;
 		
 		do {
@@ -60,7 +65,7 @@ public class Project1 {
 						} while(!nIsValid);
 						BufferedReader in = new BufferedReader(new FileReader(fileName));
 						while (in.ready()) {
-							unencrypted += in.readLine();
+							unencrypted += in.readLine() + "\n";
 						}
 							in.close();
 							validInput = true;
@@ -70,12 +75,33 @@ public class Project1 {
 						validInput = false;
 				}
 			} while (!validInput);  
-		
+			
+			int counter = 0;
+			
 			for (int i = 0; i < unencrypted.length(); i++) {
-			encrypted += (char)(unencrypted.charAt(i) + n);
+				char c = (char)(unencrypted.charAt(i) + n);
+				if (Character.isAlphabetic(c)) {
+					encrypted += c;
+					counter++;
+				} else {
+					encrypted += (char)unencrypted.charAt(i);
+				}
 			}
-		
-			JOptionPane.showMessageDialog(null, encrypted);
+			
+			outputOption = JOptionPane.showInputDialog(null, OUTPUT_MSG);
+			
+			switch (outputOption) {
+				case "1":
+					JOptionPane.showMessageDialog(null, encrypted);
+					break;
+				case "2":
+					BufferedWriter out = new BufferedWriter(new FileWriter("riddles-encrypted.txt"));
+					out.write(encrypted);
+					out.close();
+					break;
+			}
+			
+			JOptionPane.showMessageDialog(null, "You have successfully encrypted " + counter + " characters.");
 		
 			int yesOrNo = JOptionPane.showConfirmDialog(null, "Run again?");
 			if (yesOrNo == JOptionPane.YES_OPTION)
