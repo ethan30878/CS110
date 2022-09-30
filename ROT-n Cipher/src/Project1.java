@@ -57,7 +57,7 @@ public class Project1 {
 						do {
 							value = JOptionPane.showInputDialog(null, ENTER_VALUE);
 							n = Integer.parseInt(value);
-							if (n > 0 && n < 25) {
+							if (n >= 1 && n <= 25) {
 								nIsValid = true;
 							} else {
 								JOptionPane.showMessageDialog(null, "Invalid number: " + n + "\nMust be between 1 and 25.\nPlease try again.");
@@ -78,25 +78,18 @@ public class Project1 {
 			
 			int counter = 0;
 			
+			unencrypted = unencrypted.toUpperCase();
+			
 			for (int i = 0; i < unencrypted.length(); i++) {
 				
-				char c = (char)(unencrypted.charAt(i) + n);
-				int ascii = c;
-				JOptionPane.showMessageDialog(null, ascii);
+				char c = unencrypted.charAt(i);
 				
 				if (Character.isAlphabetic(c)) {
-					if (ascii > 90) {
-						encrypted += (char)(65 + (ascii - 90));;
-						counter++;
-					} else if (ascii > 122) {
-						encrypted += (char)(97 + (ascii - 122));;
-						counter++;
-					} else if (ascii >= 65 && ascii <= 90 || ascii >= 97 && ascii <= 122) {
-						encrypted += c;
-						counter++;
-					}
+					c = (char)((((char)(c - 65) + n) % 26) + 65);
+					encrypted += c;
+					counter++;
 				} else {
-					encrypted += (char)unencrypted.charAt(i);
+					encrypted += c;
 				}
 			}
 			
@@ -116,11 +109,11 @@ public class Project1 {
 			JOptionPane.showMessageDialog(null, "You have successfully encrypted " + counter + " characters.");
 		
 			int yesOrNo = JOptionPane.showConfirmDialog(null, "Encrypt another plain text?");
+			
 			if (yesOrNo == JOptionPane.YES_OPTION)
 				runAgain = true;
 			else
 				runAgain = false;
-			
 		} while(runAgain);		
 	}
 }
