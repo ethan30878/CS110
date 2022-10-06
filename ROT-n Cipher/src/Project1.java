@@ -25,9 +25,9 @@ public class Project1 {
 				+ "Enter the number of your selection:\n"
 				+ "1: Output cipher text to screen.\n"
 				+ "2: Output cipher text to file.";
-	static String _plainText = "";
-	static String _cipherText = "";
-	static int _n = 0;
+	static String plainText = "";
+	static String cipherText = "";
+	static int n = 0;
 
 	/* This function asks the user where to get the data from, a string or a file. */
 	public static void queryPlainText() throws IOException {
@@ -36,7 +36,7 @@ public class Project1 {
 			String option = JOptionPane.showInputDialog(null, WELCOME_MSG, "ROT-n Cipher", JOptionPane.INFORMATION_MESSAGE);
 			switch (option) {
 				case "1":
-					_plainText = JOptionPane.showInputDialog(null, "Enter the plain text:", "ROT-n Cipher", JOptionPane.INFORMATION_MESSAGE);
+					plainText = JOptionPane.showInputDialog(null, "Enter the plain text:", "ROT-n Cipher", JOptionPane.INFORMATION_MESSAGE);
 					getNumberOfRotations();
 					validInput = true;
 					break;
@@ -54,7 +54,7 @@ public class Project1 {
 					/* Reads the file to the plain text string. */
 					BufferedReader in = new BufferedReader(reader);
 					while (in.ready()) {
-						_plainText += in.readLine() + "\n";
+						plainText += in.readLine() + "\n";
 					}
 					in.close();
 					reader.close();
@@ -70,13 +70,13 @@ public class Project1 {
 	}
 	/* Acquires and validates n value for ROT-n calculations. */
 	public static void getNumberOfRotations() {
-		boolean valid = false;
+		boolean valid = true;
 		do {
 			/* Retrieves the number of rotations from the user. */
 			String value = JOptionPane.showInputDialog(null, ENTER_VALUE);
 			/* Attempts to convert the string to an integer. */
 			try {
-				_n = Integer.parseInt(value);
+				n = Integer.parseInt(value);
 			} catch(NumberFormatException Exception) {
 				/* Displays an error if this string could not be converted to an integer. */
 				String notNumeric = String.format("Value is not numeric: %s\nTry again.", value);
@@ -84,13 +84,13 @@ public class Project1 {
 				continue;
 			}
 			/* Tests if n is within range. */
-			if (_n >=1  && _n <= 25) {
+			if (n >=1  && n <= 25) {
 				break;
 			} else {
 				/* Displays an error if n is out of range. */
-				String outOfRange = String.format("Invalid number: %d\nMust be between 1 and 25.\nPlease try again.", _n);
+				String outOfRange = String.format("Invalid number: %d\nMust be between 1 and 25.\nPlease try again.", n);
 				JOptionPane.showMessageDialog(null, outOfRange);
-				valid = true;
+				valid = false;
 			}
 		} while(!valid);
 	}
@@ -103,13 +103,13 @@ public class Project1 {
 			switch (outputOption) {
 				case "1":
 					/* Prints cipherText to screen. */
-					JOptionPane.showMessageDialog(null, _cipherText);
+					JOptionPane.showMessageDialog(null, cipherText);
 					valid = true;
 					break;
 				case "2":
 					/* Writes cipherText to file.  */
 					BufferedWriter out = new BufferedWriter(new FileWriter("riddles-encrypted.txt"));
-					out.write(_cipherText);
+					out.write(cipherText);
 					out.close();
 					valid = true;
 					break;
@@ -126,16 +126,16 @@ public class Project1 {
 		int counter = 0;
 		do {
 			queryPlainText();
-			_plainText = _plainText.toUpperCase();
+			plainText = plainText.toUpperCase();
 			/* Runs the encoder. */
-			for (int i = 0; i < _plainText.length(); i++) {
-				char c = _plainText.charAt(i);
+			for (int i = 0; i < plainText.length(); i++) {
+				char c = plainText.charAt(i);
 				if (Character.isAlphabetic(c)) {
-					c = (char)((((char)(c - 65) + _n) % 26) + 65);
-					_cipherText += c;
+					c = (char)((((char)(c - 65) + n) % 26) + 65);
+					cipherText += c;
 					counter++;
 				} else {
-					_cipherText += c;
+					cipherText += c;
 				}
 			}
 			queryOutput();
